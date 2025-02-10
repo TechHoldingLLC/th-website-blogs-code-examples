@@ -1,6 +1,6 @@
 resource "aws_route53_record" "example" {
   count   = length(local.domain_names)
-  zone_id = "Z0209855HQNYJ43CRP7D"
+  zone_id = var.hosted_zone_id
   name    = local.domain_names[count.index]
   type    = "A"
 
