@@ -51,6 +51,19 @@ data "aws_ssm_parameter" "cognito_google_authorize_url" {
   name = "${var.global_parameter_path}/cognito/COGNITO_GOOGLE_AUTHORIZE_URL"
 }
 
+## Lambda
+data "aws_ssm_parameter" "lambda_subnet_ids" {
+  name = "${var.global_parameter_path}/lambda/LAMBDA_SUBNET_IDS"
+}
+
+data "aws_ssm_parameter" "lambda_security_group_ids" {
+  name = "${var.global_parameter_path}/lambda/LAMBDA_SECURITY_GROUP_IDS"
+}
+
+data "aws_ssm_parameter" "lmabda_artifacts_bucket_name" {
+  name = "${var.global_parameter_path}/lambda/LAMBDA_ARTIFACTS_BUCKET_NAME"
+}
+
 locals {
   ## Cognito
   cognito_apple_client_id         = data.aws_ssm_parameter.cognito_apple_client_id.value
@@ -74,4 +87,9 @@ locals {
   db_user    = "${var.global_parameter_path}/rds/default/db_master_username"
   db_pass    = "${var.global_parameter_path}/rds/default/db_master_password"
   db_port    = "${var.global_parameter_path}/rds/default/port"
+
+  ## lambda
+  lambda_subnet_ids            = data.aws_ssm_parameter.lambda_subnet_ids.value
+  lambda_security_group_ids    = data.aws_ssm_parameter.lambda_security_group_ids.value
+  lambda_artifacts_bucket_name = data.aws_ssm_parameter.lambda_artifacts_bucket_name.value
 }

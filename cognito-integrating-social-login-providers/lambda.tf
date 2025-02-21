@@ -8,10 +8,10 @@ module "lambda_post_sign_up" {
   lambda_runtime = "nodejs22.x"
   lambda_timeout = 60
 
-  security_group_ids = "security_group_id_for_lambda"
-  subnets            = "subnet_id"
+  security_group_ids = local.lambda_security_group_ids
+  subnets            = local.lambda_subnet_ids
 
-  s3_bucket = "lambda_artifacts_bucket_name"
+  s3_bucket = local.lambda_artifacts_bucket_name
   s3_key    = "post-sign-up.zip"
 
   allowed_triggers = {
@@ -36,15 +36,16 @@ module "lambda_post_sign_up" {
 module "lambda_pre_sign_up" {
   source = "git::https://github.com/TechHoldingLLC/terraform-aws-lambda-function.git?ref=v1.0.10"
 
-  function_name      = "pre-sign-up"
-  description        = "Pre sign up"
-  handler            = "index.handler"
-  lambda_runtime     = "nodejs22.x"
-  security_group_ids = "security_group_id_for_lambda"
-  subnets            = "subnet_id"
-  lambda_timeout     = 60
+  function_name  = "pre-sign-up"
+  description    = "Pre sign up"
+  handler        = "index.handler"
+  lambda_runtime = "nodejs22.x"
+  lambda_timeout = 60
 
-  s3_bucket = "lambda_artifacts_bucket_name"
+  security_group_ids = local.lambda_security_group_ids
+  subnets            = local.lambda_subnet_ids
+
+  s3_bucket = local.lambda_artifacts_bucket_name
   s3_key    = "pre-sign-up.zip"
 
   allowed_triggers = {
