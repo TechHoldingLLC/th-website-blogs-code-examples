@@ -22,7 +22,7 @@ module "lambda_post_confirmation" {
     }
   }
 
-  env_vars_from_parameter_store = {
+  environment_variables = {
     DB_HOST    = var.db_host
     DB_HOST_RO = var.db_host_ro
     DB_NAME    = var.db_name
@@ -56,7 +56,7 @@ module "lambda_pre_sign_up" {
     }
   }
 
-  env_vars_from_parameter_store = {
+  environment_variables = {
     DB_HOST    = var.db_host
     DB_HOST_RO = var.db_host_ro
     DB_NAME    = var.db_name
