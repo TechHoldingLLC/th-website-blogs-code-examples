@@ -1,18 +1,18 @@
 ## Post sign up
-module "lambda_post_sign_up" {
+module "lambda_post_confirmation" {
   source = "git::https://github.com/TechHoldingLLC/terraform-aws-lambda-function.git?ref=v1.0.10"
 
-  function_name  = "post-sign-up"
-  description    = "Post sign up"
+  function_name  = "post-confirmation"
+  description    = "Post confirmation"
   handler        = "index.handler"
   lambda_runtime = "nodejs22.x"
   lambda_timeout = 60
 
-  security_group_ids = local.lambda_security_group_ids
-  subnets            = local.lambda_subnet_ids
+  security_group_ids = var.lambda_security_group_ids
+  subnets            = var.lambda_subnet_ids
 
-  s3_bucket = local.lambda_artifacts_bucket_name
-  s3_key    = "post-sign-up.zip"
+  source_file = "../src/post-confirmation"
+  output_path = "post-confirmation.zip"
 
   allowed_triggers = {
     Cognito = {
@@ -23,12 +23,12 @@ module "lambda_post_sign_up" {
   }
 
   env_vars_from_parameter_store = {
-    DB_HOST    = local.db_host
-    DB_HOST_RO = local.db_host_ro
-    DB_NAME    = local.db_name
-    DB_USER    = local.db_user
-    DB_PASS    = local.db_pass
-    DB_PORT    = local.db_port
+    DB_HOST    = var.db_host
+    DB_HOST_RO = var.db_host_ro
+    DB_NAME    = var.db_name
+    DB_USER    = var.db_user
+    DB_PASS    = var.db_pass
+    DB_PORT    = var.db_port
   }
 }
 
@@ -42,11 +42,11 @@ module "lambda_pre_sign_up" {
   lambda_runtime = "nodejs22.x"
   lambda_timeout = 60
 
-  security_group_ids = local.lambda_security_group_ids
-  subnets            = local.lambda_subnet_ids
+  security_group_ids = var.lambda_security_group_ids
+  subnets            = var.lambda_subnet_ids
 
-  s3_bucket = local.lambda_artifacts_bucket_name
-  s3_key    = "pre-sign-up.zip"
+  source_file = "../src/pre-sign-up"
+  output_path = "pre-sign-up.zip"
 
   allowed_triggers = {
     Cognito = {
@@ -57,11 +57,11 @@ module "lambda_pre_sign_up" {
   }
 
   env_vars_from_parameter_store = {
-    DB_HOST    = local.db_host
-    DB_HOST_RO = local.db_host_ro
-    DB_NAME    = local.db_name
-    DB_USER    = local.db_user
-    DB_PASS    = local.db_pass
-    DB_PORT    = local.db_port
+    DB_HOST    = var.db_host
+    DB_HOST_RO = var.db_host_ro
+    DB_NAME    = var.db_name
+    DB_USER    = var.db_user
+    DB_PASS    = var.db_pass
+    DB_PORT    = var.db_port
   }
 }
