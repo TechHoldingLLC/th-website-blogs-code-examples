@@ -22,14 +22,6 @@ resource "aws_cognito_user_pool" "user_pool" {
     post_confirmation = module.lambda_post_sign_up.arn
     pre_sign_up       = module.lambda_pre_sign_up.arn
   }
-
-  lifecycle {
-    prevent_destroy = true
-    ignore_changes = [
-      account_recovery_setting,
-      schema
-    ]
-  }
 }
 
 ## Cognito user pool domain
@@ -38,8 +30,4 @@ resource "aws_cognito_user_pool_domain" "domain" {
   # to use cognito domain, enter only subdomain. for example: "example-app"
   domain       = "example-app"
   user_pool_id = aws_cognito_user_pool.user_pool.id
-
-  lifecycle {
-    prevent_destroy = true
-  }
 }

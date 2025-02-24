@@ -4,15 +4,15 @@ locals {
       provider_name = "SignInWithApple"
       provider_details = {
         authorize_scopes              = "email name"
-        client_id                     = var.cognito_apple_client_id
-        team_id                       = var.cognito_apple_team_id
-        key_id                        = var.cognito_apple_key_id
-        authorize_url                 = var.cognito_apple_authorize_url
+        client_id                     = "cognito_apple_client_id"
+        team_id                       = "cognito_apple_team_id"
+        key_id                        = "cognito_apple_key_id"
+        authorize_url                 = "cognito_apple_authorize_url"
         attributes_url_add_attributes = false
         oidc_issuer                   = "https://appleid.apple.com"
         token_url                     = "https://appleid.apple.com/auth/token"
         token_request_method          = "POST"
-        private_key                   = var.cognito_apple_private_key
+        private_key                   = "cognito_apple_private_key"
       }
       attribute_mapping = {
         email       = "email"
@@ -25,10 +25,10 @@ locals {
       provider_name = "Facebook"
       provider_details = {
         authorize_scopes              = "public_profile, email"
-        client_id                     = var.cognito_facebook_client_id
-        client_secret                 = var.cognito_facebook_client_secret
-        attributes_url                = var.cognito_facebook_attributes_url
-        authorize_url                 = var.cognito_facebook_authorize_url
+        client_id                     = "cognito_facebook_client_id"
+        client_secret                 = "cognito_facebook_client_secret"
+        attributes_url                = "cognito_facebook_attributes_url"
+        authorize_url                 = "cognito_facebook_authorize_url"
         attributes_url_add_attributes = true
         token_request_method          = "GET"
         token_url                     = "https://graph.facebook.com/v17.0/oauth/access_token"
@@ -44,10 +44,10 @@ locals {
       provider_name = "Google"
       provider_details = {
         authorize_scopes              = "profile email"
-        client_id                     = var.cognito_google_client_id
-        client_secret                 = var.cognito_google_client_secret
-        attributes_url                = var.cognito_google_attributes_url
-        authorize_url                 = var.cognito_google_authorize_url
+        client_id                     = "cognito_google_client_id"
+        client_secret                 = "cognito_google_client_secret"
+        attributes_url                = "cognito_google_attributes_url"
+        authorize_url                 = "cognito_google_authorize_url"
         attributes_url_add_attributes = true
         oidc_issuer                   = "https://accounts.google.com"
         token_request_method          = "POST"
@@ -76,10 +76,4 @@ resource "aws_cognito_identity_provider" "identity_provider" {
   provider_type     = each.value.provider_name
   provider_details  = each.value.provider_details
   attribute_mapping = each.value.attribute_mapping
-
-  lifecycle {
-    ignore_changes = [
-      provider_details
-    ]
-  }
 }

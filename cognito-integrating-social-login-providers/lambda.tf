@@ -6,10 +6,9 @@ module "lambda_post_confirmation" {
   description    = "Post confirmation"
   handler        = "index.handler"
   lambda_runtime = "nodejs22.x"
-  lambda_timeout = 60
 
-  security_group_ids = var.lambda_security_group_ids
-  subnets            = var.lambda_subnet_ids
+  security_group_ids = ["lambda_security_group_ids"]
+  subnets            = ["lambda_subnet_ids"]
 
   source_file = "../src/post-confirmation"
   output_path = "post-confirmation.zip"
@@ -23,12 +22,7 @@ module "lambda_post_confirmation" {
   }
 
   environment_variables = {
-    DB_HOST    = var.db_host
-    DB_HOST_RO = var.db_host_ro
-    DB_NAME    = var.db_name
-    DB_USER    = var.db_user
-    DB_PASS    = var.db_pass
-    DB_PORT    = var.db_port
+    DB_URL = "database_url"
   }
 }
 
@@ -40,10 +34,9 @@ module "lambda_pre_sign_up" {
   description    = "Pre sign up"
   handler        = "index.handler"
   lambda_runtime = "nodejs22.x"
-  lambda_timeout = 60
 
-  security_group_ids = var.lambda_security_group_ids
-  subnets            = var.lambda_subnet_ids
+  security_group_ids = ["lambda_security_group_ids"]
+  subnets            = ["lambda_subnet_ids"]
 
   source_file = "../src/pre-sign-up"
   output_path = "pre-sign-up.zip"
@@ -57,11 +50,6 @@ module "lambda_pre_sign_up" {
   }
 
   environment_variables = {
-    DB_HOST    = var.db_host
-    DB_HOST_RO = var.db_host_ro
-    DB_NAME    = var.db_name
-    DB_USER    = var.db_user
-    DB_PASS    = var.db_pass
-    DB_PORT    = var.db_port
+    DB_URL = "database_url"
   }
 }
