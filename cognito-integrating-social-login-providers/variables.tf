@@ -117,8 +117,3 @@ variable "lambda_security_group_ids" {
   description = "Lambda security group ids"
   type        = string
 }
-
-variable "lambda_artifacts_bucket_name" {
-  description = "Lambda artifacts bucket name"
-  type        = string
-}
